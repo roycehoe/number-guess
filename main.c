@@ -11,7 +11,7 @@ int banner() {
 }
 
 int instructions() {
-	printf("Pick a number between 1 and 10. Your objective is to guess the number I am thinking of!");
+	printf("Pick a number between 1 and 10. Your objective is to guess the number I am thinking of!\n");
 	printf("Your number: ");
 	return 0;
 }
@@ -26,13 +26,11 @@ int main() {
 
 	while (isPlaying) {
 		scanf("%d", &pickedNumber);
-		if (pickedNumber != 5) {
-			printf("Oops, that wasn't the number I was thinking of. Please try again");
-		}
-		else {
+		if (pickedNumber == 5) {
 			printf("----YOU WON!----\n");
-			isPlaying = false;
+			return 0;
 		}
+		printf("Oops, that wasn't the number I was thinking of. Please try again\n");
+		printf("Your number: ");
 	}
-	return 0;
 }
