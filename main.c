@@ -22,7 +22,7 @@ int instructions() {
 int main() {
 	srand(time(NULL));
 	int userPickedNumber;
-	int computerPickedNumber = (rand() % 10) - 1;
+	int computerPickedNumber = (rand() % 10) + 1;
 
 	banner();
 	instructions();
