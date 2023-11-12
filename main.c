@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 int banner() {
 	printf("------------------------\n");
@@ -18,15 +20,16 @@ int instructions() {
 
 
 int main() {
-	int pickedNumber;
-	bool isPlaying = true;
+	srand(time(NULL));
+	int userPickedNumber;
+	int computerPickedNumber = (rand() % 10) - 1;
 
 	banner();
 	instructions();
 
-	while (isPlaying) {
-		scanf("%d", &pickedNumber);
-		if (pickedNumber == 5) {
+	while (true) {
+		scanf("%d", &userPickedNumber);
+		if (userPickedNumber == computerPickedNumber) {
 			printf("----YOU WON!----\n");
 			return 0;
 		}
