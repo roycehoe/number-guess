@@ -1,20 +1,15 @@
 #include <stdio.h>
 
-int getFahrenheit(int celsius) {
-	return (celsius * 9/5) + 32;
+int banner() {
+	printf("------------------------\n");
+	printf("------------------------\n");
+	printf("----GUESS THE NUMBER----\n");
+	printf("------------------------\n");
+	printf("------------------------\n");
 }
 
 
-
-
-
 int main() {
-	int start = 0;
-	int end = 10;
-
-	for (int i=0; i < end; i++) {
-		printf("%d", start);
-		start += 1;
-	}
+	banner();
 	return 0;
 }
