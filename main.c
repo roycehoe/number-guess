@@ -3,12 +3,36 @@
 #include <stdlib.h>
 #include <limits.h>
 #include <time.h>
+#include <string.h>
+
+const int PLAYER_NAME_MAX_CHAR = 128;
+const int DEFAULT_CREDITS = 1000;
 
 enum guessResult {
 	TOO_HIGH,
 	TOO_LOW,
 	EQUAL
 };
+
+struct Player {
+	char* name;
+	int credits;
+};
+
+
+struct Player initPlayer(char * name) {
+	struct Player player;
+	player.name = name;
+	player.credits = DEFAULT_CREDITS;
+	return player;
+}
+
+int main() {
+	struct Player player = initPlayer("Royce");
+	printf("%s", player.name);
+	printf("%d", player.credits);
+}
+
 
 int banner() {
 	printf("------------------------\n");
@@ -82,31 +106,31 @@ void clearBuffer() {
 	while (getchar() != '\n');
 }
 
-int main() {
-	srand(time(NULL));
-	int userPickedNumber;
-	int computerPickedNumber = (rand() % 10) + 1;
 
-	banner();
-	instructions();
-
-	while (true) {
-		userPickedNumber = getNumberInput(128);
-		if (userPickedNumber == 0) {
-			printf("Please press enter to continue\n");
-			clearBuffer();
-			printf("Your number: ");
-			continue;
-		}
-
-		int guessResult = getGuessResult(userPickedNumber, computerPickedNumber);
-		char *guessResultMessage = getGuessResultMessage(guessResult);
-		printf("%s", guessResultMessage);
-
-		if (guessResult != EQUAL) {
-			continue;
-		}
-		printf("----YOU WON!----\n");
-		return 0;
-	}
-}
+// int main() {
+// 	srand(time(NULL));
+// 	int userPickedNumber;
+// 	int computerPickedNumber = (rand() % 10) + 1;
+// 
+// 	banner();
+// 	instructions();
+// 
+// 	while (true) {
+// 		userPickedNumber = getNumberInput(128);
+// 		if (userPickedNumber == 0) {
+// 			printf("Please press enter to continue\n");
+// 			clearBuffer();
+// 			printf("Your number: ");
+// 			continue;
+// 		}
+// 
+// 		int guessResult = getGuessResult(userPickedNumber, computerPickedNumber);
+// 		char *guessResultMessage = getGuessResultMessage(guessResult);
+// 		printf("%s", guessResultMessage);
+// 		if (guessResult != EQUAL) {
+// 			continue;
+// 		}
+// 		printf("----YOU WON!----\n");
+// 		return 0;
+// 	}
+// }
