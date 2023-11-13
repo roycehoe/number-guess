@@ -15,20 +15,28 @@ enum guessResult {
 };
 
 struct Player {
-	char* name;
+	char name[128];
 	int credits;
 };
 
 
-struct Player initPlayer(char * name) {
+struct Player initPlayer(char *name) {
 	struct Player player;
-	player.name = name;
+
+    strncpy(player.name, name, 128 - 1);
+    player.name[128 - 1] = '\0';
 	player.credits = DEFAULT_CREDITS;
 	return player;
 }
 
 int main() {
-	struct Player player = initPlayer("Royce");
+	char name[128];
+	struct Player player 
+
+	fgets(name, 128, stdin);
+	name[strcspn(name, "\n")] = '\0';
+	player = initPlayer(name);
+
 	printf("%s", player.name);
 	printf("%d", player.credits);
 }
