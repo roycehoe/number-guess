@@ -4,14 +4,6 @@
 #include <limits.h>
 #include <time.h>
 
-enum errorCodes {
-	NO_ERROR,
-	BUFFER_OVERFLOW_ERROR,
-	NO_DIGITS_FOUND_ERROR,
-	NUMBER_TOO_LARGE_ERROR,
-	NUMBER_TOO_SMALL_ERROR
-}
-
 int banner() {
 	printf("------------------------\n");
 	printf("------------------------\n");
@@ -33,47 +25,56 @@ int getNumberInput(int inputSize) {
 	char *endptr;
 
 	if (fgets(initialInput, sizeof(initialInput), stdin) == NULL) {
-		return BUFFER_OVERFLOW_ERROR;
+		printf("Buffer overflow avoided\n");
+		return 0;
 	}
 
 	numberInput = strtol(initialInput, &endptr, 10);
 	if (*endptr == numberInput) {
-		return NO_DIGITS_FOUND_ERROR;
+		printf("No digits found or extra char after number\n");
+		return 0;
 	}
 	if (*endptr != '\n') {
-		return NO_DIGITS_FOUND_ERROR;
+		printf("No digits found or extra char after number\n");
+		return 0;
 	}
 	if (numberInput < INT_MIN) {
-		return NUMBER_TOO_SMALL_ERROR
+		printf("Number too low\n");
+		return 0;
 	}
 	if (numberInput > INT_MAX) {
-		return NUMBER_TOO_LARGE_ERROR
+		printf("Number too high\n");
+		return 0;
 	}
 	return (int)numberInput;
 }
 
-int main() {
-	int numberInput = getNumberInput(128);
-	return 0;
+void clearBuffer() {
+	while (getchar() != '\n');
 }
 
+int main() {
+	srand(time(NULL));
+	int userPickedNumber;
+	int computerPickedNumber = (rand() % 10) + 1;
 
+	banner();
+	instructions();
 
-// int main() {
-// 	srand(time(NULL));
-// 	int userPickedNumber;
-// 	int computerPickedNumber = (rand() % 10) + 1;
-// 
-// 	banner();
-// 	instructions();
-// 
-// 	while (true) {
-// 		userPickedNumber = getUserPickedNumber();
-// 		if (userPickedNumber == computerPickedNumber) {
-// 			printf("----YOU WON!----\n");
-// 			return 0;
-// 		}
-// 		printf("Oops, that wasn't the number I was thinking of. Please try again\n");
-// 		printf("Your number: ");
-// 	}
-// }
+	while (true) {
+		userPickedNumber = getNumberInput(128);
+		if (userPickedNumber == 0) {
+			printf("Please press enter to continue\n");
+			clearBuffer();
+			printf("Your number: ");
+			continue;
+		}
+		if (userPickedNumber != computerPickedNumber) {
+			printf("Oops, that wasn't the number I was thinking of. Please try again\n");
+			printf("Your number: ");
+			continue;
+		}
+		printf("----YOU WON!----\n");
+		return 0;
+	}
+}
