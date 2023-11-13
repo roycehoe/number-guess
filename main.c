@@ -36,8 +36,15 @@ int getGuessResult(int userPickedNumber, int computerPickedNumber) {
 	return EQUAL;
 }
 
-int getGuessResultMessage(enum guessResult result) {
-	return 0;
+char * getGuessResultMessage(enum guessResult result) {
+	switch (result) {
+		case TOO_HIGH:
+			return "Your guess is too high!";
+		case TOO_LOW:
+			return "Your guess is too low!";
+		default:
+			return "You got it!";
+	}
 }
 
 int getNumberInput(int inputSize) {
@@ -93,7 +100,9 @@ int main() {
 		}
 		if (userPickedNumber != computerPickedNumber) {
 			int test = getGuessResult(userPickedNumber, computerPickedNumber);
+			char *guessResultMessage = getGuessResultMessage(test);
 			printf("%d\n", test);
+			printf("%s", guessResultMessage);
 			printf("Oops, that wasn't the number I was thinking of. Please try again\n");
 			printf("Your number: ");
 			continue;
