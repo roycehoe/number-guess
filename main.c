@@ -30,11 +30,8 @@ int getNumberInput(int inputSize) {
 	}
 
 	numberInput = strtol(initialInput, &endptr, 10);
-	if (*endptr == numberInput) {
-		printf("No digits found or extra char after number\n");
-		return 0;
-	}
-	if (*endptr != '\n') {
+
+	if (*endptr != '\0' && *endptr != '\n') {
 		printf("No digits found or extra char after number\n");
 		return 0;
 	}
@@ -44,6 +41,10 @@ int getNumberInput(int inputSize) {
 	}
 	if (numberInput > INT_MAX) {
 		printf("Number too high\n");
+		return 0;
+	}
+	if (numberInput == 0) {
+		printf("0 is an invalid number!\n");
 		return 0;
 	}
 	return (int)numberInput;
