@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <limits.h>
 #include <time.h>
 
 int banner() {
@@ -18,18 +19,46 @@ int instructions() {
 	return 0;
 }
 
+int getNumberInput(int inputSize) {
+	char initialInput[inputSize];
+	long numberInput;
+	char *endptr;
+
+	if (fgets(initialInput, sizeof(initialInput), stdin) == NULL) {
+		printf("Buffer overflow avoided");
+		return 0;
+	}
+
+	numberInput = strtol(initialInput, &endptr, 10);
+	if (*endptr == numberInput) {
+		printf("No digits found or extra char after number");
+		return 0;
+	}
+	if (*endptr != '\n') {
+		printf("No digits found or extra char after number");
+		return 0;
+	}
+	if (numberInput < INT_MIN) {
+		printf("Number too low");
+	}
+	if (numberInput > INT_MAX) {
+		printf("Number too high");
+	}
+	return (int)numberInput;
+}
+
 int clearInputBuffer() {
 	while (getchar() != '\n');
 	return 0;
 }
 
 int getUserPickedNumber() {
-	int userPickedNumber;
+	char input[256];
 
 	while (true) {
-		int result = scanf("%d", &userPickedNumber);
+		int result = scanf("%d", &input);
 		if (result == 1) {
-			return userPickedNumber;
+			return input;
 		} else {
 			clearInputBuffer();
 			printf("Please enter a valid number\n");
@@ -38,23 +67,28 @@ int getUserPickedNumber() {
 	}
 }
 
-
-
 int main() {
-	srand(time(NULL));
-	int userPickedNumber;
-	int computerPickedNumber = (rand() % 10) + 1;
-
-	banner();
-	instructions();
-
-	while (true) {
-		userPickedNumber = getUserPickedNumber();
-		if (userPickedNumber == computerPickedNumber) {
-			printf("----YOU WON!----\n");
-			return 0;
-		}
-		printf("Oops, that wasn't the number I was thinking of. Please try again\n");
-		printf("Your number: ");
-	}
+	int numberInput = getNumberInput(128);
+	return 0;
 }
+
+
+
+// int main() {
+// 	srand(time(NULL));
+// 	int userPickedNumber;
+// 	int computerPickedNumber = (rand() % 10) + 1;
+// 
+// 	banner();
+// 	instructions();
+// 
+// 	while (true) {
+// 		userPickedNumber = getUserPickedNumber();
+// 		if (userPickedNumber == computerPickedNumber) {
+// 			printf("----YOU WON!----\n");
+// 			return 0;
+// 		}
+// 		printf("Oops, that wasn't the number I was thinking of. Please try again\n");
+// 		printf("Your number: ");
+// 	}
+// }
