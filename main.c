@@ -39,11 +39,11 @@ int getGuessResult(int userPickedNumber, int computerPickedNumber) {
 char * getGuessResultMessage(enum guessResult result) {
 	switch (result) {
 		case TOO_HIGH:
-			return "Your guess is too high!";
+			return "Your guess is too high!\n";
 		case TOO_LOW:
-			return "Your guess is too low!";
+			return "Your guess is too low!\n";
 		default:
-			return "You got it!";
+			return "You guessed it right!\n";
 	}
 }
 
@@ -98,13 +98,12 @@ int main() {
 			printf("Your number: ");
 			continue;
 		}
-		if (userPickedNumber != computerPickedNumber) {
-			int test = getGuessResult(userPickedNumber, computerPickedNumber);
-			char *guessResultMessage = getGuessResultMessage(test);
-			printf("%d\n", test);
-			printf("%s", guessResultMessage);
-			printf("Oops, that wasn't the number I was thinking of. Please try again\n");
-			printf("Your number: ");
+
+		int guessResult = getGuessResult(userPickedNumber, computerPickedNumber);
+		char *guessResultMessage = getGuessResultMessage(guessResult);
+		printf("%s", guessResultMessage);
+
+		if (guessResult != EQUAL) {
 			continue;
 		}
 		printf("----YOU WON!----\n");
