@@ -5,8 +5,8 @@
 #include <time.h>
 #include <string.h>
 
-const int PLAYER_NAME_MAX_CHAR = 128;
-const int DEFAULT_CREDITS = 1000;
+# define PLAYER_NAME_MAX_CHAR 128
+# define DEFAULT_CREDITS 1000
 
 enum guessResult {
 	TOO_HIGH,
@@ -15,7 +15,7 @@ enum guessResult {
 };
 
 struct Player {
-	char name[128];
+	char name[PLAYER_NAME_MAX_CHAR];
 	int credits;
 };
 
@@ -23,22 +23,30 @@ struct Player {
 struct Player initPlayer(char *name) {
 	struct Player player;
 
-    strncpy(player.name, name, 128 - 1);
-    player.name[128 - 1] = '\0';
+    strncpy(player.name, name, PLAYER_NAME_MAX_CHAR - 1);
+    player.name[PLAYER_NAME_MAX_CHAR - 1] = '\0';
 	player.credits = DEFAULT_CREDITS;
 	return player;
 }
 
-int main() {
-	char name[128];
-	struct Player player 
+void postInitPlayerDialog(char *name) {
+	printf("%s", "Hello ");
+	printf("%s", name);
+}
 
-	fgets(name, 128, stdin);
+void initPlayerDialog() {
+	printf("What is your name?");
+}
+
+int main() {
+	char name[PLAYER_NAME_MAX_CHAR];
+	struct Player player;
+
+	initPlayerDialog();
+	fgets(name, PLAYER_NAME_MAX_CHAR, stdin);
 	name[strcspn(name, "\n")] = '\0';
 	player = initPlayer(name);
-
-	printf("%s", player.name);
-	printf("%d", player.credits);
+	postInitPlayerDialog(player.name);
 }
 
 
