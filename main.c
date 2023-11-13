@@ -18,6 +18,27 @@ int instructions() {
 	return 0;
 }
 
+int clearInputBuffer() {
+	while (getchar() != '\n');
+	return 0;
+}
+
+int getUserPickedNumber() {
+	int userPickedNumber;
+
+	while (true) {
+		int result = scanf("%d", &userPickedNumber);
+		if (result == 1) {
+			return userPickedNumber;
+		} else {
+			clearInputBuffer();
+			printf("Please enter a valid number\n");
+			printf("Your number: ");
+		}
+	}
+}
+
+
 
 int main() {
 	srand(time(NULL));
@@ -28,7 +49,7 @@ int main() {
 	instructions();
 
 	while (true) {
-		scanf("%d", &userPickedNumber);
+		userPickedNumber = getUserPickedNumber();
 		if (userPickedNumber == computerPickedNumber) {
 			printf("----YOU WON!----\n");
 			return 0;
