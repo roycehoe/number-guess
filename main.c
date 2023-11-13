@@ -4,6 +4,14 @@
 #include <limits.h>
 #include <time.h>
 
+enum errorCodes {
+	NO_ERROR,
+	BUFFER_OVERFLOW_ERROR,
+	NO_DIGITS_FOUND_ERROR,
+	NUMBER_TOO_LARGE_ERROR,
+	NUMBER_TOO_SMALL_ERROR
+}
+
 int banner() {
 	printf("------------------------\n");
 	printf("------------------------\n");
@@ -25,46 +33,23 @@ int getNumberInput(int inputSize) {
 	char *endptr;
 
 	if (fgets(initialInput, sizeof(initialInput), stdin) == NULL) {
-		printf("Buffer overflow avoided");
-		return 0;
+		return BUFFER_OVERFLOW_ERROR;
 	}
 
 	numberInput = strtol(initialInput, &endptr, 10);
 	if (*endptr == numberInput) {
-		printf("No digits found or extra char after number");
-		return 0;
+		return NO_DIGITS_FOUND_ERROR;
 	}
 	if (*endptr != '\n') {
-		printf("No digits found or extra char after number");
-		return 0;
+		return NO_DIGITS_FOUND_ERROR;
 	}
 	if (numberInput < INT_MIN) {
-		printf("Number too low");
+		return NUMBER_TOO_SMALL_ERROR
 	}
 	if (numberInput > INT_MAX) {
-		printf("Number too high");
+		return NUMBER_TOO_LARGE_ERROR
 	}
 	return (int)numberInput;
-}
-
-int clearInputBuffer() {
-	while (getchar() != '\n');
-	return 0;
-}
-
-int getUserPickedNumber() {
-	char input[256];
-
-	while (true) {
-		int result = scanf("%d", &input);
-		if (result == 1) {
-			return input;
-		} else {
-			clearInputBuffer();
-			printf("Please enter a valid number\n");
-			printf("Your number: ");
-		}
-	}
 }
 
 int main() {
